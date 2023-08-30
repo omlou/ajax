@@ -1,0 +1,55 @@
+{
+  "name": "@xlou/ajax",
+  "version": "1.0.0",
+  "main": "./dist/es/ajax.min.js",
+  "module": "./dist/es/ajax.min.js",
+  "browser": "./dist/umd/ajax.min.js",
+  "exports": {
+    ".": {
+      "types": "./index.d.ts",
+      "umd": "./dist/umd/ajax.min.js",
+      "es": "./dist/es/ajax.min.js",
+      "default": "./dist/es/ajax.min.js"
+    }
+  },
+  "type": "module",
+  "types": "./index.d.ts",
+  "keywords": [
+    "ajax",
+    "XMLHttpRequest",
+    "http",
+    "JavaScript"
+  ],
+  "description": "Front-end tool for sending AJAX requests",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/omlou/ajax.git"
+  },
+  "unpkg": "dist/umd/ajax.min.js",
+  "jsdelivr": "dist/umd/ajax.min.js",
+  "scripts": {
+    "build": "gulp clear && rollup -c",
+    "start": "gulp serve",
+    "upgrade": "gulp upgrade --host %npm_config_host%"
+  },
+  "author": "Louis Xu",
+  "license": "MIT",
+  "devDependencies": {
+    "@rollup/plugin-commonjs": "^25.0.0",
+    "@rollup/plugin-json": "^6.0.0",
+    "@rollup/plugin-node-resolve": "^15.1.0",
+    "@rollup/plugin-terser": "^0.4.3",
+    "@rollup/plugin-typescript": "^11.1.1",
+    "fs-extra": "^11.1.1",
+    "gulp": "^4.0.2",
+    "gulp-clean": "^0.4.0",
+    "gulp-webserver": "^0.9.1",
+    "minimist": "^1.2.8",
+    "rollup": "^3.24.0",
+    "rollup-plugin-dts": "^5.3.0",
+    "typescript": "^4.9.5"
+  },
+  "dependencies": {
+    "@xlou/webtools": "^1.1.5"
+  }
+}
