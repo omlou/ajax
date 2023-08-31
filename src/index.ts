@@ -6,7 +6,7 @@ interface AjaxArguments {
   url: string,
   params?: GeneralObject,
   data?: any,
-  responseType?: string,
+  responseType?: ResType,
   withCredentials?: boolean,
   timeout?: number,
   uploadProgress?: (ev: Event) => any
@@ -22,6 +22,34 @@ interface AjaxRequest {
   statusText: string
 }
 
+enum ResType {
+  DF = "",
+  AB = "arraybuffer",
+  Blob = "blob",
+  DOC = "document",
+  JSON = "json",
+  TXT = "text"
+}
+
+enum ContentType {
+  json = "application/json;charset=UTF-8",
+  urlencoded = "application/x-www-form-urlencoded;charset=UTF-8",
+  formData = "multipart/form-data",
+  text = "text/plain;charset=UTF-8",
+  xml = "application/xml;charset=UTF-8",
+  stream = "application/octet-stream"
+}
+
+const bodySet = new Set([
+  '[object String]',
+  '[object FormData]',
+  '[object Blob]',
+  '[object ArrayBuffer]',
+  '[object URLSearchParams]',
+  '[object Null]',
+  '[object Undefined]'
+])
+
 /* 将对象转换为可拼接在 URL 后的参数 */
 function getUrlParam(url: string, data: GeneralObject | string): string {
   if (!data) { return "" }
@@ -31,12 +59,16 @@ function getUrlParam(url: string, data: GeneralObject | string): string {
 }
 
 /* 转换 POST 请求的 body 参数 */
-function getPostParam(data: any): any {
+function typeJSON(data: any): any {
+  
+}
+function typeURL(data: any): any {
   if (!data) return null
   if ((typeof data === "string") || (data instanceof FormData)) {
     return data
   }
   return queryString(data)
+  var a : XMLHttpRequestBodyInit
 }
 
 /* 获取返回头参数 */
@@ -123,6 +155,53 @@ function ajax(args: AjaxArguments): Promise<AjaxRequest> {
         (args.downloadProgress as any)(ev)
       })
     }
+
+    /* 处理请求参数 */
+    let { method, url, params, data, headers, timeout, responseType, withCredentials } = args
+    
+    /* 处理 method */
+    method = method ? method.toUpperCase() : "GET"
+    let simrequ = false
+    if (new Set(['GET', 'DELETE', 'HEAD', 'OPTIONS', 'TRACE']).has(method)) {
+      simrequ = true
+    }
+
+    /* 处理 url */
+    if (params) {
+      url += getUrlParam(url, params)
+    }
+
+    /* 开启请求 */
+    xhr.open(method, url, true)
+
+    /* 处理 withCredentials ，该参数控制请求是否支持携带 cookie */
+    if (withCredentials !== undefined) {
+      xhr.withCredentials = withCredentials
+    }
+
+    /* 处理 responseType */
+    xhr.responseType = responseType || ResType.JSON
+
+    /* 处理 headers ，并根据 Content-Type 处理 data 数据 */
+    if (headers) {
+      let type = ""
+      for (const i in headers) {
+        let item = headers[i]
+        if (item === null || item === undefined) {
+          item = ""
+        } else {
+          item = String(item)
+        }
+				xhr.setRequestHeader(i, item)
+        const key = i
+        if (key.toLowerCase() === 'content-type') {
+          type = item
+        }
+			}
+    } else {
+
+    }
+
 
 
     /* let method = "GET"
