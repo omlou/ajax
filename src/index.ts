@@ -1,5 +1,12 @@
 import { queryString, GeneralObject } from '@xlou/webtools'
 
+interface AjaxOptions {
+  (args: AjaxArguments): Promise<AjaxRequest>
+  getUrlParam?: (url: string, data: GeneralObject | string) => string
+  getHeaders?: (arg: string | null) => GeneralObject
+  ContentType?: ContentType
+}
+
 interface AjaxArguments {
   method?: string
   headers?: GeneralObject,
@@ -59,16 +66,27 @@ function getUrlParam(url: string, data: GeneralObject | string): string {
 }
 
 /* 转换 POST 请求的 body 参数 */
-function typeJSON(data: any): any {
-  
-}
-function typeURL(data: any): any {
-  if (!data) return null
-  if ((typeof data === "string") || (data instanceof FormData)) {
+function convertData(data: any, type: string, xhr: XMLHttpRequest): any {
+  if (bodySet.has(Object.prototype.toString.call(data))) {
     return data
   }
-  return queryString(data)
-  var a : XMLHttpRequestBodyInit
+  if (type) {
+    if (type.includes("application/json")) {
+      data = JSON.stringify(data)
+    } else if (type.includes("application/x-www-form-urlencoded")) {
+      data = queryString(data)
+    } else if (type.includes("multipart/form-data")) {
+      const formData = new FormData()
+      for (let i in data) {
+        formData.append(i, data[i])
+      }
+      data = formData
+    }
+  } else {
+    xhr.setRequestHeader("Content-Type", ContentType.json)
+    data = JSON.stringify(data)
+  }
+  return data
 }
 
 /* 获取返回头参数 */
@@ -89,7 +107,7 @@ function getOk(status: number): boolean {
   return status >= 200 && status <= 299
 }
 
-function ajax(args: AjaxArguments): Promise<AjaxRequest> {
+const ajax: AjaxOptions = function(args: AjaxArguments): Promise<AjaxRequest> {
   return new Promise(function(resolve, reject) {
     const xhr = new XMLHttpRequest()
 
@@ -164,6 +182,7 @@ function ajax(args: AjaxArguments): Promise<AjaxRequest> {
     let simrequ = false
     if (new Set(['GET', 'DELETE', 'HEAD', 'OPTIONS', 'TRACE']).has(method)) {
       simrequ = true
+
     }
 
     /* 处理 url */
@@ -198,47 +217,25 @@ function ajax(args: AjaxArguments): Promise<AjaxRequest> {
           type = item
         }
 			}
+      data = simrequ ? null : convertData(data, type, xhr)
     } else {
-
+      data = simrequ ? null : convertData(data, "", xhr)
     }
 
+    /* 处理 timeout */
+    xhr.timeout = timeout || 0
 
-
-    /* let method = "GET"
-    if (init) {
-      method = (init.method?.toUpperCase() || "GET")
-    }
-    let simrequ = false
-    if (new Set(['GET', 'DELETE', 'HEAD', 'OPTIONS', 'TRACE']).has(method)) simrequ = true
-    if (input instanceof Request) input = input.url
-    xhr.open(method, input, true)
-    xhr.responseType = "blob"
-    if (init) {
-      if (init.credentials && init.credentials === "include") {
-        xhr.withCredentials = true
-      }
-      const { headers } = init
-      if (headers) {
-        if (Array.isArray(headers)) {
-          for (const item of headers) {
-            xhr.setRequestHeader(item[0], item[1])
-          }
-        } else if (headers instanceof Headers) {
-          headers.forEach((item, i) => {
-            xhr.setRequestHeader(i, item)
-          })
-        } else {
-          for (const i in headers) {
-            xhr.setRequestHeader(i, headers[i])
-          }
-        }
-      }
-    }
-    let body = null
-    if (init) {
-      body = (init.body || null)
-    }
-    if (body instanceof ReadableStream) throw "Body does not support ReadableStream in XMLHttpRequest."
-    xhr.send(body) */
+    /* 发送请求 */
+    xhr.send()
   })
+}
+
+export {
+  AjaxOptions,
+  AjaxArguments,
+  AjaxRequest,
+  ContentType,
+  getUrlParam,
+  getHeaders,
+  ajax as default
 }

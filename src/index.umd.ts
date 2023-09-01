@@ -1,3 +1,9 @@
-import webtools from "./index"
+import ajax, { getUrlParam, getHeaders, ContentType } from "./index"
 
-export default webtools
+Object.assign(ajax, {
+  getUrlParam,
+  getHeaders,
+  ContentType
+})
+
+export default ajax

@@ -1,9 +1,11 @@
 {
   "compilerOptions": {
     "strict": true,
-    "noEmit": true,
     "target": "ESNext",
     "noImplicitThis": false,
-    "moduleResolution": "NodeNext"
+    "module": "ESNext",
+    "moduleResolution": "Node",
+    "esModuleInterop": true,
+    "resolveJsonModule": true
   }
 }

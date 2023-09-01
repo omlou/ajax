@@ -3,6 +3,7 @@ import fs from 'fs-extra'
 import clean from 'gulp-clean'
 import pkg from 'gulp'
 import minimist from 'minimist'
+
 const {src} = pkg
 const languages = ["zh", "ja", "ko", "fr"]
 
