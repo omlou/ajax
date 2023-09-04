@@ -4,17 +4,16 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <title>ajax</title>
-  <script src="../dist/ajax.min.js"></script>
-  <style></style>
+  <script src="../dist/umd/ajax.min.js"></script>
+  <script>
+    ajax({
+      url: "http://127.0.0.1:3000/get",
+      params: {
+        id: 123
+      }
+    })
+  </script>
 </head>
 <body>
-  <div class="app">
-    <input class="a" type="text" placeholder="数字两位小数">
-    <input class="b" type="text" placeholder="数字两位小数，最大长度6">
-    <input class="b" type="text" placeholder="数字两位小数，最大长度6">
-  </div>
-  <script>
-    
-  </script>
 </body>
 </html>

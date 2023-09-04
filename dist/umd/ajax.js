@@ -161,6 +161,7 @@
             }
             /* 开启请求 */
             xhr.open(method, url, true);
+            console.log(xhr);
             /* 处理 withCredentials ，该参数控制请求是否支持携带 cookie */
             if (withCredentials !== undefined) {
                 xhr.withCredentials = withCredentials;
@@ -192,7 +193,7 @@
             /* 处理 timeout */
             xhr.timeout = timeout || 0;
             /* 发送请求 */
-            xhr.send();
+            // xhr.send()
         });
     };
 

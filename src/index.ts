@@ -57,6 +57,8 @@ const bodySet = new Set([
   '[object Undefined]'
 ])
 
+const simSet = new Set(['GET', 'DELETE', 'HEAD', 'OPTIONS', 'TRACE'])
+
 /* 将对象转换为可拼接在 URL 后的参数 */
 function getUrlParam(url: string, data: GeneralObject | string): string {
   if (!data) { return "" }
@@ -66,7 +68,10 @@ function getUrlParam(url: string, data: GeneralObject | string): string {
 }
 
 /* 转换 POST 请求的 body 参数 */
-function convertData(data: any, type: string, xhr: XMLHttpRequest): any {
+function convertData(data: any, type: string, xhr: XMLHttpRequest, method: string): any {
+  if (simSet.has(method)) {
+    return null
+  }
   if (bodySet.has(Object.prototype.toString.call(data))) {
     return data
   }
@@ -179,11 +184,6 @@ const ajax: AjaxOptions = function(args: AjaxArguments): Promise<AjaxRequest> {
     
     /* 处理 method */
     method = method ? method.toUpperCase() : "GET"
-    let simrequ = false
-    if (new Set(['GET', 'DELETE', 'HEAD', 'OPTIONS', 'TRACE']).has(method)) {
-      simrequ = true
-
-    }
 
     /* 处理 url */
     if (params) {
@@ -192,6 +192,7 @@ const ajax: AjaxOptions = function(args: AjaxArguments): Promise<AjaxRequest> {
 
     /* 开启请求 */
     xhr.open(method, url, true)
+    console.log(xhr)
 
     /* 处理 withCredentials ，该参数控制请求是否支持携带 cookie */
     if (withCredentials !== undefined) {
@@ -217,16 +218,16 @@ const ajax: AjaxOptions = function(args: AjaxArguments): Promise<AjaxRequest> {
           type = item
         }
 			}
-      data = simrequ ? null : convertData(data, type, xhr)
+      data = convertData(data, type, xhr, method)
     } else {
-      data = simrequ ? null : convertData(data, "", xhr)
+      data = convertData(data, "", xhr, method)
     }
 
     /* 处理 timeout */
     xhr.timeout = timeout || 0
 
     /* 发送请求 */
-    xhr.send()
+    xhr.send(data)
   })
 }
 
