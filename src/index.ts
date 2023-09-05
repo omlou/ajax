@@ -80,12 +80,6 @@ function convertData(data: any, type: string, xhr: XMLHttpRequest, method: strin
       data = JSON.stringify(data)
     } else if (type.includes("application/x-www-form-urlencoded")) {
       data = queryString(data)
-    } else if (type.includes("multipart/form-data")) {
-      const formData = new FormData()
-      for (let i in data) {
-        formData.append(i, data[i])
-      }
-      data = formData
     }
   } else {
     xhr.setRequestHeader("Content-Type", ContentType.json)
@@ -192,7 +186,6 @@ const ajax: AjaxOptions = function(args: AjaxArguments): Promise<AjaxRequest> {
 
     /* 开启请求 */
     xhr.open(method, url, true)
-    console.log(xhr)
 
     /* 处理 withCredentials ，该参数控制请求是否支持携带 cookie */
     if (withCredentials !== undefined) {

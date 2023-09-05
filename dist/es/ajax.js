@@ -27,6 +27,7 @@ const bodySet = new Set([
     '[object Null]',
     '[object Undefined]'
 ]);
+const simSet = new Set(['GET', 'DELETE', 'HEAD', 'OPTIONS', 'TRACE']);
 /* 将对象转换为可拼接在 URL 后的参数 */
 function getUrlParam(url, data) {
     if (!data) {
@@ -38,7 +39,10 @@ function getUrlParam(url, data) {
     return url.indexOf('?') !== -1 ? ('&' + paramsString) : ('?' + paramsString);
 }
 /* 转换 POST 请求的 body 参数 */
-function convertData(data, type, xhr) {
+function convertData(data, type, xhr, method) {
+    if (simSet.has(method)) {
+        return null;
+    }
     if (bodySet.has(Object.prototype.toString.call(data))) {
         return data;
     }
@@ -48,13 +52,6 @@ function convertData(data, type, xhr) {
         }
         else if (type.includes("application/x-www-form-urlencoded")) {
             data = i(data);
-        }
-        else if (type.includes("multipart/form-data")) {
-            const formData = new FormData();
-            for (let i in data) {
-                formData.append(i, data[i]);
-            }
-            data = formData;
         }
     }
     else {
@@ -145,17 +142,12 @@ const ajax = function (args) {
         let { method, url, params, data, headers, timeout, responseType, withCredentials } = args;
         /* 处理 method */
         method = method ? method.toUpperCase() : "GET";
-        let simrequ = false;
-        if (new Set(['GET', 'DELETE', 'HEAD', 'OPTIONS', 'TRACE']).has(method)) {
-            simrequ = true;
-        }
         /* 处理 url */
         if (params) {
             url += getUrlParam(url, params);
         }
         /* 开启请求 */
         xhr.open(method, url, true);
-        console.log(xhr);
         /* 处理 withCredentials ，该参数控制请求是否支持携带 cookie */
         if (withCredentials !== undefined) {
             xhr.withCredentials = withCredentials;
@@ -179,15 +171,15 @@ const ajax = function (args) {
                     type = item;
                 }
             }
-            data = simrequ ? null : convertData(data, type, xhr);
+            data = convertData(data, type, xhr, method);
         }
         else {
-            data = simrequ ? null : convertData(data, "", xhr);
+            data = convertData(data, "", xhr, method);
         }
         /* 处理 timeout */
         xhr.timeout = timeout || 0;
         /* 发送请求 */
-        // xhr.send()
+        xhr.send(data);
     });
 };
 

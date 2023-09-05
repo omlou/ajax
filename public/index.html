@@ -6,11 +6,19 @@
   <title>ajax</title>
   <script src="../dist/umd/ajax.min.js"></script>
   <script>
+    console.log("Content-Type", ajax.ContentType)
+    let formData = new FormData()
+    formData.append("pageSize", 10)
     ajax({
-      url: "http://127.0.0.1:3000/get",
+      url: "http://127.0.0.1:3000/post",
+      method: "post",
       params: {
         id: 123
-      }
+      },
+      data: formData
+    })
+    .then(res => {
+      console.log(res.response)
     })
   </script>
 </head>
