@@ -1,6 +1,7 @@
-import ajax, { getUrlParam, getHeaders, ContentType } from "./index"
+import ajax, { queryString, getUrlParam, getHeaders, ContentType } from "./index"
 
 Object.assign(ajax, {
+  queryString,
   getUrlParam,
   getHeaders,
   ContentType

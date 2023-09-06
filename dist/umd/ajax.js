@@ -87,7 +87,6 @@
             const xhr = new XMLHttpRequest();
             /* 监听请求成功返回结果 */
             xhr.addEventListener('load', ev => {
-                console.log("load", ev, xhr);
                 const headers = getHeaders(xhr.getAllResponseHeaders());
                 const ajaxRequest = {
                     request: xhr,
@@ -106,12 +105,10 @@
             });
             /* 监听请求发生错误 */
             xhr.addEventListener('error', ev => {
-                console.log("error", ev, xhr);
                 reject(ev);
             });
             /* 监听请求超时 */
             xhr.addEventListener('timeout', ev => {
-                console.log("timeout", ev, xhr);
                 reject(ev);
             });
             /* 添加上传进度的监听 */
@@ -132,7 +129,7 @@
                     args.uploadProgress(ev);
                 });
             }
-            /* 添加下载监听 */
+            /* 添加下载进度的监听 */
             if (args.downloadProgress) {
                 xhr.addEventListener('loadstart', ev => {
                     args.downloadProgress(ev);
@@ -190,6 +187,7 @@
     };
 
     Object.assign(ajax, {
+        queryString: i,
         getUrlParam,
         getHeaders,
         ContentType

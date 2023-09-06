@@ -2,6 +2,7 @@ import { queryString, GeneralObject } from '@xlou/webtools'
 
 interface AjaxOptions {
   (args: AjaxArguments): Promise<AjaxRequest>
+  queryString?: (obj: GeneralObject, bol?: boolean) => string
   getUrlParam?: (url: string, data: GeneralObject | string) => string
   getHeaders?: (arg: string | null) => GeneralObject
   ContentType?: ContentType
@@ -112,7 +113,6 @@ const ajax: AjaxOptions = function(args: AjaxArguments): Promise<AjaxRequest> {
 
     /* 监听请求成功返回结果 */
     xhr.addEventListener('load', ev => {
-      console.log("load", ev, xhr)
       const headers = getHeaders(xhr.getAllResponseHeaders())
       const ajaxRequest = {
         request: xhr,
@@ -131,13 +131,11 @@ const ajax: AjaxOptions = function(args: AjaxArguments): Promise<AjaxRequest> {
 
     /* 监听请求发生错误 */
     xhr.addEventListener('error', ev => {
-      console.log("error", ev, xhr)
       reject(ev)
     })
 
     /* 监听请求超时 */
     xhr.addEventListener('timeout', ev => {
-      console.log("timeout", ev, xhr)
       reject(ev)
     })
 
@@ -160,7 +158,7 @@ const ajax: AjaxOptions = function(args: AjaxArguments): Promise<AjaxRequest> {
       })
     }
 
-    /* 添加下载监听 */
+    /* 添加下载进度的监听 */
     if (args.downloadProgress) {
       xhr.addEventListener('loadstart', ev => {
         (args.downloadProgress as any)(ev)
@@ -229,6 +227,7 @@ export {
   AjaxArguments,
   AjaxRequest,
   ContentType,
+  queryString,
   getUrlParam,
   getHeaders,
   ajax as default

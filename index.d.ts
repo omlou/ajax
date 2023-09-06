@@ -1,7 +1,9 @@
 import { GeneralObject } from '@xlou/webtools';
+export { queryString } from '@xlou/webtools';
 
 interface AjaxOptions {
     (args: AjaxArguments): Promise<AjaxRequest>;
+    queryString?: (obj: GeneralObject, bol?: boolean) => string;
     getUrlParam?: (url: string, data: GeneralObject | string) => string;
     getHeaders?: (arg: string | null) => GeneralObject;
     ContentType?: ContentType;
