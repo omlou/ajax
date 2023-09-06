@@ -1,10 +1,10 @@
 ### 언어
 
-* [English](https://github.com/omlou/webtools#readme)
-* [简体中文](https://github.com/omlou/webtools/blob/master/public/markdowns/readme-zh.md)
-* [日本語](https://github.com/omlou/webtools/blob/master/public/markdowns/readme-ja.md)
-* [한국어](https://github.com/omlou/webtools/blob/master/public/markdowns/readme-ko.md)
-* [Français](https://github.com/omlou/webtools/blob/master/public/markdowns/readme-fr.md)
+* [English](https://github.com/omlou/ajax#readme)
+* [简体中文](https://github.com/omlou/ajax/blob/master/public/markdowns/readme-zh.md)
+* [日本語](https://github.com/omlou/ajax/blob/master/public/markdowns/readme-ja.md)
+* [한국어](https://github.com/omlou/ajax/blob/master/public/markdowns/readme-ko.md)
+* [Français](https://github.com/omlou/ajax/blob/master/public/markdowns/readme-fr.md)
 
 ### 소개
 
