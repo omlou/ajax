@@ -16,8 +16,8 @@ const commonPlugins = [
 
 const config = [
   {
-    input:"src/index.umd.ts",
-    output:[
+    input: "src/index.umd.ts",
+    output: [
       {
         file: `dist/umd/${name}.js`,
         format: 'umd',
@@ -34,8 +34,8 @@ const config = [
     plugins: commonPlugins
   },
   {
-    input:"src/index.ts",
-    output:[
+    input: "src/index.ts",
+    output: [
       {
         file: `dist/es/${name}.js`,
         format: 'es'
