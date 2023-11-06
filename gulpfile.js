@@ -36,7 +36,7 @@ async function upgrade() {
   await fs.writeJSON('package.json', npm, { spaces: 2 })
   upgradeFile("readme.md")
   languages.forEach(item => {
-    upgradeFile(`public/markdowns/readme-${item}.md`)
+    upgradeFile(`public/md/readme-${item}.md`)
   })
 
   async function upgradeFile(url) {

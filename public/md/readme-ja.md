@@ -1,24 +1,24 @@
-### Langues
+### 言語
 
 * [English](https://github.com/omlou/ajax#readme)
-* [简体中文 (Chinois simplifié)](https://github.com/omlou/ajax/blob/master/public/markdowns/readme-zh.md)
-* [日本語 (Japonais)](https://github.com/omlou/ajax/blob/master/public/markdowns/readme-ja.md)
-* [한국어 (Coréen)](https://github.com/omlou/ajax/blob/master/public/markdowns/readme-ko.md)
-* [Français](https://github.com/omlou/ajax/blob/master/public/markdowns/readme-fr.md)
+* [简体中文](https://github.com/omlou/ajax/blob/master/public/md/readme-zh.md)
+* [日本語](https://github.com/omlou/ajax/blob/master/public/md/readme-ja.md)
+* [한국어](https://github.com/omlou/ajax/blob/master/public/md/readme-ko.md)
+* [Français](https://github.com/omlou/ajax/blob/master/public/md/readme-fr.md)
 
-### Introduction
+### はじめに
 
-* Outil front-end pour envoyer des requêtes AJAX
+* AJAX リクエストを送信するためのフロントエンドツール
 
-### Utilisation
+### 使用方法
 
-#### Utilisation dans des projets traditionnels
+#### 伝統的なプロジェクトでの使用
 
 ```html
 <script src="https://unpkg.com/@xlou/ajax@1.0.1/dist/umd/ajax.min.js"></script>
-<!-- Il est recommandé de télécharger le fichier localement et de l'utiliser -->
+<!-- ローカルにダウンロードして使用することをお勧めします -->
 <script>
-  /* Après avoir inclus ce fichier JS, l'objet ajax sera disponible dans la fenêtre */
+  /* このJSファイルを含めた後、ajaxオブジェクトはグローバルで利用可能になります */
   ajax({
     url: "http://127.0.0.1:3000/post",
     method: "post",
@@ -30,23 +30,23 @@
     }
   })
   .then(res => {
-    console.log("réponse", res.response)
+    console.log("レスポンス", res.response)
   })
 </script>
 ```
 
-#### Utilisation dans Vue, React, Angular et d'autres projets Node
+#### Vue、React、Angular、およびその他のNodeプロジェクトでの使用
 
-Installation
+インストール
 
 ```bash
 npm i @xlou/ajax
 ```
 
-Dans main.js ou main.ts
+main.jsまたはmain.tsで
 
 ```javascript
-/* Utilisation du package complet */
+/* パッケージ全体を使用 */
 import ajax from '@xlou/ajax'
 
 ajax({
@@ -60,7 +60,7 @@ ajax({
   }
 })
 .then(res => {
-  console.log("réponse", res.response)
+  console.log("レスポンス", res.response)
 })
 ```
 
@@ -68,9 +68,9 @@ ajax({
 
 #### ajax
 
-Envoyer une requête AJAX.
+AJAX リクエストを送信します。
 
-Détails des paramètres
+パラメータの詳細
 
 ```typescript
 interface GeneralObject {
@@ -110,23 +110,23 @@ interface AjaxRequest {
 const ajax: AjaxOptions = function(args: AjaxArguments): Promise<AjaxRequest>
 ```
 
-Exemple d'utilisation
+使用例
 
 ```javascript
 ajax({
-  url: "http://127.0.0.1:3000/post", // Spécifiez l'adresse de la requête.
-  method: "post", // Définissez le type de requête.
-  headers: { // Définissez les paramètres d'en-tête de la requête.
+  url: "http://127.0.0.1:3000/post", // リクエストアドレスを指定します。
+  method: "post", // リクエストの種類を設定します。
+  headers: { // リクエストヘッダーパラメータを設定します。
     "Content-Type": "application/x-www-form-urlencoded;charset=UTF-8"
   },
-  params: { // Convertissez et ajoutez en tant que paramètres de requête à l'URL de la requête.
+  params: { // リクエストURLにクエリパラメータとして変換して追加します。
     id: 1
   },
-  data: { // Convertissez les paramètres du corps de la requête en fonction du Content-Type.
+  data: { // Content-Typeに基づいてリクエストボディパラメータを変換します。
     name: "Tom"
   },
-  uploadProgress(ev) { }, // Ajoutez un écouteur pour la progression de l'envoi.
-  downloadProgress(ev) { } // Ajoutez un écouteur pour la progression du téléchargement.
+  uploadProgress(ev) { }, // アップロード進捗を監視するリスナーを追加します。
+  downloadProgress(ev) { } // ダウンロード進捗を監視するリスナーを追加します。
 })
 .then(res => {
   console.log("post-data-urlencoded", res.response)
@@ -135,43 +135,43 @@ ajax({
 
 #### queryString
 
-Convertir un objet en paramètres d'URL.
+オブジェクトをURLパラメータに変換します。
 
-Détails des paramètres
+パラメータの詳細
 
 ```typescript
 queryString?: (obj: GeneralObject, bol?: boolean) => string
 ```
 
-Exemple d'utilisation
+使用例
 
 ```javascript
-/* Importation par balise script */
+/* Scriptタグのインポートを使用 */
 ajax.queryString({
   id: 1,
   type: "hello"
 })
 // id=1&type=hello
 
-/* Importation via ECMAScript Module */
+/* ECMAScriptモジュールのインポートを使用 */
 import { queryString } from '@xlou/ajax'
 queryString({/* ... */})
 ```
 
 #### getUrlParam
 
-Convertir un objet en paramètres d'URL et déterminer s'il faut ajouter '?' en fonction de l'URL.
+オブジェクトをURLパラメータに変換し、URLに基づいて'?'を追加するかどうかを判断します。
 
-Détails des paramètres
+パラメータの詳細
 
 ```typescript
 getUrlParam?: (url: string, data: GeneralObject | string) => string
 ```
 
-Exemple d'utilisation
+使用例
 
 ```javascript
-/* Importation par balise script */
+/* Scriptタグのインポートを使用 */
 ajax.getUrlParam("www.xxx.com", {
   id: 1,
   type: "hello"
@@ -184,39 +184,39 @@ ajax.getUrlParam("www.xxx.com?key=a", {
 })
 // id=1&type=hello
 
-/* Importation via ECMAScript Module */
+/* ECMAScriptモジュールのインポートを使用 */
 import { getUrlParam } from '@xlou/ajax'
 getUrlParam({/* ... */})
 ```
 
 #### getHeaders
 
-Convertir le résultat renvoyé par xhr.getAllResponseHeaders() en un objet.
+xhr.getAllResponseHeaders()が返す結果をオブジェクトに変換します。
 
-Détails des paramètres
+パラメータの詳細
 
 ```typescript
-getHeaders?: (arg: string | null) => General
-
-Object
+getHeaders?: (arg: string | null) => GeneralObject
 ```
 
-Exemple d'utilisation
+使用例
 
 ```javascript
-/* Importation par balise script */
+/* Scriptタグのインポートを使用 */
 ajax.getHeaders(xhr.getAllResponseHeaders())
 
-/* Importation via ECMAScript Module */
+/* ECMAScriptモジュールのインポートを使用 */
 import { getHeaders } from '@xlou/ajax'
 getHeaders(xhr.getAllResponseHeaders())
 ```
 
 #### ContentType
 
-Un objet contenant quelques types de Content-Type.
+いくつかのContent-Typeを含むオブジェクトです。
 
-Détails des paramètres
+パラメータの
+
+詳細
 
 ```typescript
 enum ContentType {
@@ -229,12 +229,12 @@ enum ContentType {
 }
 ```
 
-Exemple d'utilisation
+使用例
 
 ```javascript
-/* Importation par balise script */
+/* Scriptタグのインポートを使用 */
 ajax.ContentType
 
-/* Importation via ECMAScript Module */
+/* ECMAScriptモジュールのインポートを使用 */
 import { ContentType } from '@xlou/ajax'
 ```

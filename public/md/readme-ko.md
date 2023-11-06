@@ -1,24 +1,24 @@
-### 语言
+### 언어
 
 * [English](https://github.com/omlou/ajax#readme)
-* [简体中文](https://github.com/omlou/ajax/blob/master/public/markdowns/readme-zh.md)
-* [日本語](https://github.com/omlou/ajax/blob/master/public/markdowns/readme-ja.md)
-* [한국어](https://github.com/omlou/ajax/blob/master/public/markdowns/readme-ko.md)
-* [Français](https://github.com/omlou/ajax/blob/master/public/markdowns/readme-fr.md)
+* [简体中文](https://github.com/omlou/ajax/blob/master/public/md/readme-zh.md)
+* [日本語](https://github.com/omlou/ajax/blob/master/public/md/readme-ja.md)
+* [한국어](https://github.com/omlou/ajax/blob/master/public/md/readme-ko.md)
+* [Français](https://github.com/omlou/ajax/blob/master/public/md/readme-fr.md)
 
-### 简介
+### 소개
 
-* 用于发送 AJAX 请求的前端工具
+* AJAX 요청을 보내는 프론트엔드 도구
 
-### 用法
+### 사용법
 
-#### 在传统项目中使用
+#### 전통적인 프로젝트에서 사용하기
 
 ```html
 <script src="https://unpkg.com/@xlou/ajax@1.0.1/dist/umd/ajax.min.js"></script>
-<!-- 建议下载并在本地使用文件 -->
+<!-- 파일을 다운로드하고 로컬로 사용하는 것이 좋습니다 -->
 <script>
-  /* 包含此JS文件后，ajax对象将在全局可用 */
+  /* 이 JS 파일을 포함한 후에 ajax 객체가 전역으로 사용 가능합니다 */
   ajax({
     url: "http://127.0.0.1:3000/post",
     method: "post",
@@ -30,22 +30,23 @@
     }
   })
   .then(res => {
-    console.log("响应", res.response)
+    console.log("응답", res.response)
   })
 </script>
 ```
 
-#### 在Vue、React、Angular和其他Node项目中使用
+#### Vue, React, Angular 및 기타 Node 프로젝트에서 사용하기
 
-安装
+설치
 
 ```bash
 npm i @xlou/ajax
 ```
 
-在 main.js 或 main.ts 中
+main.js 또는 main.ts에서
 
 ```javascript
+/* 패키지 전체를 사용 */
 import ajax from '@xlou/ajax'
 
 ajax({
@@ -59,7 +60,7 @@ ajax({
   }
 })
 .then(res => {
-  console.log("响应", res.response)
+  console.log("응답", res.response)
 })
 ```
 
@@ -67,9 +68,9 @@ ajax({
 
 #### ajax
 
-发送一个AJAX请求。
+AJAX 요청을 보냅니다.
 
-参数详情
+매개변수 상세 정보
 
 ```typescript
 interface GeneralObject {
@@ -109,23 +110,23 @@ interface AjaxRequest {
 const ajax: AjaxOptions = function(args: AjaxArguments): Promise<AjaxRequest>
 ```
 
-使用示例
+사용 예시
 
 ```javascript
 ajax({
-  url: "http://127.0.0.1:3000/post", // 指定请求地址。
-  method: "post", // 设置请求类型。
-  headers: { // 设置请求头参数。
+  url: "http://127.0.0.1:3000/post", // 요청 주소 지정.
+  method: "post", // 요청 유형 설정.
+  headers: { // 요청 헤더 매개변수 설정.
     "Content-Type": "application/x-www-form-urlencoded;charset=UTF-8"
   },
-  params: { // 转换为URL参数并拼接到请求地址。
+  params: { // 요청 URL에 쿼리 매개변수로 변환하여 추가.
     id: 1
   },
-  data: { // 根据Content-Type将请求体参数转换。
+  data: { // Content-Type에 기반하여 요청 본문 매개변수 변환.
     name: "Tom"
   },
-  uploadProgress(ev) { }, // 添加上传进度的监听。
-  downloadProgress(ev) { } // 添加下载进度的监听。
+  uploadProgress(ev) { }, // 업로드 진행 상황을 감시하는 리스너 추가.
+  downloadProgress(ev) { } // 다운로드 진행 상황을 감시하는 리스너 추가.
 })
 .then(res => {
   console.log("post-data-urlencoded", res.response)
@@ -134,43 +135,43 @@ ajax({
 
 #### queryString
 
-将对象转换为URL参数。
+객체를 URL 매개변수로 변환합니다.
 
-参数详情
+매개변수 상세 정보
 
 ```typescript
 queryString?: (obj: GeneralObject, bol?: boolean) => string
 ```
 
-使用示例
+사용 예시
 
 ```javascript
-/* 使用Script标签导入 */
+/* Script 태그 가져오기를 사용 */
 ajax.queryString({
   id: 1,
   type: "hello"
 })
 // id=1&type=hello
 
-/* 使用ECMAScript模块导入 */
+/* ECMAScript 모듈 가져오기를 사용 */
 import { queryString } from '@xlou/ajax'
 queryString({/* ... */})
 ```
 
 #### getUrlParam
 
-将对象转换为URL参数，并根据URL判断是否需要添加'?'。
+객체를 URL 매개변수로 변환하고 URL을 기반으로 '?'를 추가할지 여부를 결정합니다.
 
-参数详情
+매개변수 상세 정보
 
 ```typescript
 getUrlParam?: (url: string, data: GeneralObject | string) => string
 ```
 
-使用示例
+사용 예시
 
 ```javascript
-/* 使用Script标签导入 */
+/* Script 태그 가져오기를 사용 */
 ajax.getUrlParam("www.xxx.com", {
   id: 1,
   type: "hello"
@@ -183,37 +184,37 @@ ajax.getUrlParam("www.xxx.com?key=a", {
 })
 // id=1&type=hello
 
-/* 使用ECMAScript模块导入 */
+/* ECMAScript 모듈 가져오기를 사용 */
 import { getUrlParam } from '@xlou/ajax'
 getUrlParam({/* ... */})
 ```
 
 #### getHeaders
 
-将xhr.getAllResponseHeaders()返回的结果转化为对象。
+xhr.getAllResponseHeaders()가 반환한 결과를 객체로 변환합니다.
 
-参数详情
+매개변수 상세 정보
 
 ```typescript
 getHeaders?: (arg: string | null) => GeneralObject
 ```
 
-使用示例
+사용 예시
 
 ```javascript
-/* 使用Script标签导入 */
+/* Script 태그 가져오기를 사용 */
 ajax.getHeaders(xhr.getAllResponseHeaders())
 
-/* 使用ECMAScript模块导入 */
+/* ECMAScript 모듈 가져오기를 사용 */
 import { getHeaders } from '@xlou/ajax'
 getHeaders(xhr.getAllResponseHeaders())
 ```
 
 #### ContentType
 
-包含了一些Content-Type的对象。
+일부 Content-Type을 포함하는 객체입니다.
 
-参数详情
+매개변수 상세 정보
 
 ```typescript
 enum ContentType {
@@ -226,12 +227,14 @@ enum ContentType {
 }
 ```
 
-使用示例
+사용 예시
 
 ```javascript
-/* 使用Script标签导入 */
+/* Script 태그 가져오기를 사용 */
 ajax.ContentType
 
-/* 使用ECMAScript模块导入 */
+/* ECMAScript 모듈 가져오기를
+
+ 사용 */
 import { ContentType } from '@xlou/ajax'
 ```
