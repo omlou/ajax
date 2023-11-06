@@ -15,7 +15,7 @@
 #### Using in Traditional Projects
 
 ```html
-<script src="https://unpkg.com/@xlou/ajax@1.0.1/dist/umd/ajax.min.js"></script>
+<script src="https://unpkg.com/@xlou/ajax@1.0.2/dist/umd/ajax.min.js"></script>
 <!-- It's recommended to download and use the file locally -->
 <script>
   /* After including this JS file, the ajax object will be available on the window */

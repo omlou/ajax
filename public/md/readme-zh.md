@@ -15,7 +15,7 @@
 #### 在传统项目中使用
 
 ```html
-<script src="https://unpkg.com/@xlou/ajax@1.0.1/dist/umd/ajax.min.js"></script>
+<script src="https://unpkg.com/@xlou/ajax@1.0.2/dist/umd/ajax.min.js"></script>
 <!-- 建议下载并在本地使用文件 -->
 <script>
   /* 包含此JS文件后，ajax对象将在全局可用 */

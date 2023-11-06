@@ -15,7 +15,7 @@
 #### 전통적인 프로젝트에서 사용하기
 
 ```html
-<script src="https://unpkg.com/@xlou/ajax@1.0.1/dist/umd/ajax.min.js"></script>
+<script src="https://unpkg.com/@xlou/ajax@1.0.2/dist/umd/ajax.min.js"></script>
 <!-- 파일을 다운로드하고 로컬로 사용하는 것이 좋습니다 -->
 <script>
   /* 이 JS 파일을 포함한 후에 ajax 객체가 전역으로 사용 가능합니다 */

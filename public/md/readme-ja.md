@@ -15,7 +15,7 @@
 #### 伝統的なプロジェクトでの使用
 
 ```html
-<script src="https://unpkg.com/@xlou/ajax@1.0.1/dist/umd/ajax.min.js"></script>
+<script src="https://unpkg.com/@xlou/ajax@1.0.2/dist/umd/ajax.min.js"></script>
 <!-- ローカルにダウンロードして使用することをお勧めします -->
 <script>
   /* このJSファイルを含めた後、ajaxオブジェクトはグローバルで利用可能になります */
